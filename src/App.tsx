@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, Container } from "@chakra-ui/react";
 
 import "./App.css";
 import Index from "./Index";
@@ -7,7 +7,7 @@ import Index from "./Index";
 function App() {
   return (
     <ChakraProvider>
-      <Index/>
+      <Index />
     </ChakraProvider>
   );
 }
