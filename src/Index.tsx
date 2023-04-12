@@ -22,6 +22,9 @@ import { DateTime, Duration } from "luxon";
 import Select from "react-select";
 import axios from "axios";
 import { AnswerType } from "./enums/answer-type";
+import SummaryResult from "./components/summary-result";
+import MusicProgressBar from "./components/music-progress-bar";
+import AnswerPlaceholders from "./components/answer-placeholders";
 
 const API_URL = "http://localhost:3000";
 
@@ -489,6 +492,16 @@ https://227.sinyo.id/heardle`;
     }
   };
 
+  const getStats = () => {
+    toast({
+      title: "Not available",
+      description: "This feature is coming soon!",
+      status: "warning",
+      duration: 1000,
+      position: "top"
+    });
+  };
+
   useEffect(() => {
     showInitialHelpIfNeeded();
     loadData();
@@ -534,6 +547,7 @@ https://227.sinyo.id/heardle`;
         showModalAboutTrigger={setShowAboutModal}
         showModalAnnoucementTrigger={setShowAnnouncementModal}
         showModalHowToPlayTrigger={setShowHowToPlayModal}
+        showModalStats={getStats}
       />
       <div className="content">
         {isFinish ? (
@@ -575,79 +589,10 @@ https://227.sinyo.id/heardle`;
               >
                 <Box>
                   <Stack textAlign="center">
-                    <Box
-                      display="flex"
-                      flexDirection="row"
-                      gap={2}
-                      fontSize={{
-                        base: 14,
-                        md: 18,
-                      }}
-                      justifyContent="center"
-                    >
-                      {answers.map((e, i) => {
-                        switch (e.answerType) {
-                          case AnswerType.Skipped:
-                            return (
-                              <span
-                                role="img"
-                                aria-label="Black medium square"
-                                className="react-emojis"
-                                style={{ lineHeight: 1 }}
-                                key={i}
-                              >
-                                ⬛
-                              </span>
-                            );
-                          case AnswerType.Incorrect:
-                            return (
-                              <span
-                                role="img"
-                                aria-label="Black medium square"
-                                className="react-emojis"
-                                style={{ lineHeight: 1 }}
-                                key={i}
-                              >
-                                🟥
-                              </span>
-                            );
-                          case AnswerType.Correct:
-                            return (
-                              <span
-                                role="img"
-                                aria-label="Black medium square"
-                                className="react-emojis"
-                                style={{ lineHeight: 1 }}
-                                key={i}
-                              >
-                                🟩
-                              </span>
-                            );
-                        }
-                      })}
-                    </Box>
-                    <Box>
-                      <Heading size="md">
-                        {isPlayerWon ? "Not Bad..." : "Better luck next time!"}
-                      </Heading>
-                    </Box>
-                    <Box
-                      fontSize={{
-                        base: 60,
-                        md: 80,
-                      }}
-                      ml="-53px"
-                      id={isPlayerWon ? "successWin" : "failToAnswer"}
-                    >
-                      <span
-                        role="img"
-                        aria-label="Result stat"
-                        className="react-emojis"
-                        style={{ lineHeight: 1 }}
-                      >
-                        {isPlayerWon ? "🎉" : "❌"}
-                      </span>
-                    </Box>
+                    <SummaryResult
+                      isPlayerWon={isPlayerWon}
+                      answers={answers}
+                    />
                     <Suspense
                     fallback={
                       <Center>
@@ -666,40 +611,9 @@ https://227.sinyo.id/heardle`;
             </Center>
           </div>
         ) : (
-          <Box
-            h={{
-              base: "40vh",
-              md: "45vh",
-            }}
-          >
-            {Array.from(Array(6).keys()).map((e, i) => (
-              <Center key={i}>
-                <Box
-                  w={{
-                    base: "95%",
-                    md: "40%",
-                  }}
-                  mt={2}
-                  borderStyle="solid"
-                  borderWidth={2}
-                  p={2}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      verticalAlign: "middle",
-                      alignItems: "center",
-                      flex: 1,
-                      minHeight: 18,
-                    }}
-                  >
-                    <Text width="95%">{answers?.[i]?.label}</Text>
-                    <IconAnswer input={answers?.[i]?.answerType} />
-                  </div>
-                </Box>
-              </Center>
-            ))}
-          </Box>
+          <AnswerPlaceholders
+            answers={answers}
+          />
         )}
       </div>
 
@@ -725,34 +639,9 @@ https://227.sinyo.id/heardle`;
                 </Center>
               </div>
             )}
-            <div style={{ marginTop: 10, position: "relative" }}>
-              <div
-                id="progress"
-                className="child child-1"
-                style={{ zIndex: 1 }}
-              >
-                <div id="xa"></div>
-                <div id="xb"></div>
-                <div id="xc"></div>
-                <div id="xd"></div>
-                <div id="xe"></div>
-                <div id="xf"></div>
-                <div id="xg"></div>
-                <div id="xh"></div>
-              </div>
-
-              <Center>
-                <Progress
-                  w={{
-                    base: "90%",
-                    md: "50.5%",
-                  }}
-                  h={15}
-                  value={progressVal}
-                  className="child child-1"
-                />
-              </Center>
-            </div>
+            <MusicProgressBar
+              progressVal={progressVal}
+            />
             <Center>
               <table id="playbackStatus">
                 <tbody>

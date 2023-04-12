@@ -2,7 +2,7 @@ import { Box, Center, Icon, Image } from "@chakra-ui/react";
 import { RiBarChartBoxLine, RiInformationLine, RiNotification4Line, RiQuestionLine } from "react-icons/ri";
 import nanabunLogo from "../assets/logo227.png";
 
-const Header = (props: {showModalAboutTrigger: any, showModalAnnoucementTrigger: any, showModalHowToPlayTrigger: any}) => (
+const Header = (props: {showModalAboutTrigger: any, showModalAnnoucementTrigger: any, showModalHowToPlayTrigger: any, showModalStats: any}) => (
     <div className="header">
     <Center>
       <Box w="100%" borderStyle="solid" borderBottom="1px">
@@ -35,7 +35,7 @@ const Header = (props: {showModalAboutTrigger: any, showModalAnnoucementTrigger:
               </Center>
             </Box>
             <Box>
-              <Icon as={RiBarChartBoxLine} />
+              <Icon onClick={props.showModalStats} as={RiBarChartBoxLine} />
             </Box>
             <Box>
               <Icon
