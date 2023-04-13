@@ -1,12 +1,7 @@
-import React from "react";
 import {
   Box,
   Button,
   Heading,
-  Link,
-  List,
-  ListIcon,
-  ListItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,7 +12,6 @@ import {
   Text,
   Spacer
 } from "@chakra-ui/react";
-import { DateTime } from "luxon";
 
 const HowToPlayModal = (props: { isOpen: boolean; onClose: any, data: Announcement[]}) => {
   return (
@@ -37,7 +31,7 @@ const HowToPlayModal = (props: { isOpen: boolean; onClose: any, data: Announceme
         <ModalBody>
             {
                 props.data && (
-                    props.data.map((e, i) => (
+                    props.data.length > 0 ? props.data.map((e, i) => (
                         <Box key={i} pt={i == 0 ? 0 : 2} pb={2}>
                             <Box
                                 display="flex"
@@ -45,12 +39,14 @@ const HowToPlayModal = (props: { isOpen: boolean; onClose: any, data: Announceme
                             >
                                 <Heading fontSize="xl">{e.title}</Heading>
                                 <Spacer />
-                                <Text fontSize="sm" mt={1}>{DateTime.fromISO(e.created_at).toFormat("yyyy-MM-dd hh:mm:ss")}</Text>
+                                <Text fontSize="sm" mt={1}>{new Date(e.created_at).toLocaleString("en-GB")}</Text>
                             </Box>
                             <Text pt={2}>{e.content}</Text>
                             <hr style={{padding: 5}} />
                         </Box>
                     ))
+                    :
+                    <Text>There's no announcement yet!</Text>
                 )
             }
         </ModalBody>

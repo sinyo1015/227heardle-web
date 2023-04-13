@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
   Box,
   Center,
@@ -7,7 +7,6 @@ import {
   Grid,
   GridItem,
   Button,
-  Progress,
   Stack,
   Spinner,
   Heading,
@@ -18,13 +17,12 @@ import {
   RiPlayCircleLine,
   RiPauseCircleLine,
 } from "react-icons/ri";
-import { DateTime, Duration } from "luxon";
-import Select from "react-select";
 import axios from "axios";
 import { AnswerType } from "./enums/answer-type";
 import SummaryResult from "./components/summary-result";
 import MusicProgressBar from "./components/music-progress-bar";
 import AnswerPlaceholders from "./components/answer-placeholders";
+import Select  from 'react-select';
 
 const API_URL = "http://localhost:3000";
 
@@ -266,23 +264,31 @@ function Index() {
     if (selectRef && selectRef.current) selectRef.current.clearValue();
   };
 
+  const msToTime = (s: number) =>  {
+    let pad = (n: number, z: number = 2) => ('00' + n).slice(-z);
+    return pad(s/3.6e6|0) + ':' + pad((s%3.6e6)/6e4 | 0) + ':' + pad((s%6e4)/1000|0);
+  };
+
   const setTimerResetChallange = () => {
-    const finish = DateTime.fromObject({ hour: 23, minute: 59, second: 59 });
+    let dateFinish = new Date();
+    dateFinish.setHours(23);
+    dateFinish.setMinutes(59);
+    dateFinish.setSeconds(59);
+
     setInterval(() => {
-      let start = DateTime.local();
-      let diff = finish.diff(start).toFormat("hh:mm:ss");
-      setTimeRemainingReset(diff);
+      const dateStart = +new Date();
+      const formattedDiff = msToTime(dateFinish.valueOf() - dateStart.valueOf());
+      
+      setTimeRemainingReset(formattedDiff);
     }, 1000);
   };
 
   const addAudioTimeUpdateListener = (audio: Nullable<HTMLAudioElement>) => {
     audio!.addEventListener("timeupdate", (e) => {
-      const duration = Duration.fromObject({
-        seconds: Math.round(audio!.currentTime),
-      });
+      const duration = new Date(Math.round(audio!.currentTime) * 1000).toISOString().substr(14, 5);
       const progress = (audio!.currentTime / divider) * 100;
       setProgressVal(progress);
-      setCurrentSongTimestamp(duration.toFormat("mm:ss"));
+      setCurrentSongTimestamp(duration);
     });
   };
 

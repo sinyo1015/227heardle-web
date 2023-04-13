@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
 
 const FTD_LIBRARIES: {label: string, link: string}[] = [

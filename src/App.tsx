@@ -1,5 +1,4 @@
-import * as React from "react";
-import { Box, ChakraProvider, Container } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import "./App.css";
 import Index from "./Index";
