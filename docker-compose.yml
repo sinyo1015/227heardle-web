@@ -1,0 +1,7 @@
+services:
+    main:
+      build: .
+      volumes:
+        - ./dist:/src/dist
+      ports:
+        - "0.0.0.0:3001:3001"
