@@ -315,7 +315,7 @@ function Index() {
     textTemplate += `
 
 #22_7 #227 #227_heardle #ナナニジ
-https://227.sinyo.id/heardle`;
+https://227.sinyo.my.id/heardle`;
 
     if (shouldReturnVal) return textTemplate;
     else {
