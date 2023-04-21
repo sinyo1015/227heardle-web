@@ -13,4 +13,4 @@ RUN npm -g i yarn --loglevel verbose
 RUN yarn global add typescript http-server
 RUN yarn install
 COPY . .
-CMD yarn build; http-server --port 3001 ./dist
+CMD yarn build; node server.cjs
