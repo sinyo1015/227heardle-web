@@ -314,7 +314,7 @@ function Index() {
     }
     textTemplate += `
 
-#22_7 #227 #227_heardle #ナナニジ
+#22_7 #227 #227_heardle #ナナニジ #227_ハートル
 https://227.sinyo.my.id/heardle`;
 
     if (shouldReturnVal) return textTemplate;
